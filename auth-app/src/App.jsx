@@ -1,7 +1,5 @@
-import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-const App = () => {
-  return <h1>App</h1>;
-};
+const App = () => {};
 
 export default App;
