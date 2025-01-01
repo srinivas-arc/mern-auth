@@ -17,7 +17,7 @@ mongoose
 app.listen(5000, () => {
   console.log("Server listening on port 5000");
 });
-app.use("/api/sign-up", authRoute);
+app.use("/api/auth", authRoute);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
