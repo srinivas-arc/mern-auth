@@ -41,3 +41,29 @@ export const signin = async (req, res, next) => {
     next(error);
   }
 };
+
+export const google = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      const pwd = bcryptjs.hashSync(
+        "defaultwebappservicespassworduserneedtochange"
+      );
+      const user = new User({
+        username: req.body.name,
+        email: req.body.email,
+        password: pwd,
+        photo: req.body.photo,
+      });
+      await user.save();
+    }
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const expiry_date = new Date(Date.now() + 3600000);
+    res
+      .cookie("access_token", token, { httpOnly: true, expires: expiry_date })
+      .status(200)
+      .json(user);
+  } catch (error) {
+    next(error);
+  }
+};
